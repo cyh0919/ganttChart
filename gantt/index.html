@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- googleFonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- element Plus -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+    <!-- vue3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Import component library -->
+    <script src="//cdn.jsdelivr.net/npm/element-plus"></script>
+</head>
+
+<body>
+    <div id="to-do-list">
+        <h1 class="title">代辦事項</h1>
+        <div id="borad1" class="borad">
+            <div class="round-bg mission">
+                <!-- 新增事項 -->
+                <div class="addTodo">
+                    <input class="input-text" type="text" v-model="newTask" @keyup.enter="addTodo"
+                        placeholder="準備要做的任務">
+                    <button class="add-btn" @click="addTodo">新增</button>
+                </div>
+
+                <!-- 時間起迄點 -->
+                <div class="timePicker">
+                    <el-date-picker v-model="newdate" type="daterange" start-placeholder="Start Date"
+                        end-placeholder="End Date" :default-value="[currentDate, currentDate]" @change="newDate" />
+                </div>
+
+                <!-- 事項貯列 -->
+                <div class="todoList-list" v-for="(item, key) in filteredTodos">
+                    <!-- 編輯表單 -->
+                    <div v-if="editingKey === key" class="line-container" style="height: unset;">
+                        <div class="todoRow">
+                            <input class="input-edit-text" type="text" v-model="editedTitle" @keyup.enter="saveTodo">
+                            <button @click="saveTodo" class="main-color-btn">保存</button>
+                            <button @click="cancelEdit" class="defalt-color-btn">取消</button>
+                        </div>
+                        <!-- 時間起迄點 -->
+                        <div class="block">
+                            <el-date-picker v-model="editdate" type="daterange" start-placeholder="Start Date"
+                                end-placeholder="End Date" :default-value="[currentDate, currentDate]"
+                                @change="editDate" />
+                        </div>
+
+                    </div>
+                    <div v-else class="line-container">
+                        <div class="todoRow">
+                            <span class="todoList-title" @click="complete(key)"
+                                :class="{ complete: item.complete }">{{item.title}}</span>
+                            <span :class="{ complete_icon: item.complete }">{{item.formattedDate}}</span>
+                            <i class="fa-solid fa-pen-to-square" @click="editTodo(key)"
+                                :class="{ complete_icon: item.complete }"></i>
+                            <i class="fa-solid fa-trash-can" @click="removeTodo(key)"
+                                :class="{ complete_icon: item.complete }"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 篩選器 -->
+                <div class="filter-container">
+                    <span class="defalt-color-btn" :class="{'main-color-btn': filter === 'all'}"
+                        @click="filter='all'">全部</span>
+                    <span class="defalt-color-btn" :class="{'main-color-btn': filter === 'ing'}"
+                        @click="filter='ing'">進行中</span>
+                    <span class="defalt-color-btn" :class="{'main-color-btn': filter === 'completed'}"
+                        @click="filter='completed'">已完成</span>
+                    <span class="note-text">還有 {{countIngMission.length}} 筆任務未完成</span>
+                    <span class="clear-all" @click="showDialog">清除全部任務</span>
+                </div>
+            </div>
+            <!-- 甘特圖 -->
+            <div class="round-bg gant" ref="horizontalScroll">
+                <!-- 日期 -->
+                <div class="date-container">
+                    <!-- days -->
+                    <span v-if="dateForm ==='days'" class="date-text" v-for="item in filterDateRange"
+                        :style="{ 'flex-basis': modifiedWidth + 'px' }">{{item.month}}/{{item.day}}
+                        {{item.dayOfWeek}}</span>
+                    <!-- 2days -->
+                    <span v-else-if="dateForm ==='2days'" class="date-text" v-for="item in filterDateRange"
+                        :style="{ 'flex-basis': modifiedWidth * 2 + 'px' }">{{item.month}}/{{item.day}}
+                        {{item.dayOfWeek}}</span>
+                    <!-- 4days -->
+                    <span v-else-if="dateForm ==='4days'" class="date-text" v-for="item in filterDateRange"
+                        :style="{ 'flex-basis': modifiedWidth * 4 + 'px' }">{{item.month}}/{{item.day}}
+                        {{item.dayOfWeek}}</span>
+                    <!-- weeks -->
+                    <span v-else-if="dateForm ==='weeks'" class="date-text" v-for="item in filterDateRange"
+                        :style="{ 'flex-basis': modifiedWidth * 7 + 'px' }">{{item.month}}/{{item.day}}
+                        {{item.dayOfWeek}}</span>
+                    <!-- 2weeks -->
+                    <span v-else-if="dateForm ==='2weeks'" class="date-text" v-for="item in filterDateRange"
+                        :style="{ 'flex-basis': modifiedWidth * 14 + 'px' }">{{item.month}}/{{item.day}}
+                        {{item.dayOfWeek}}</span>
+                    <!-- mouth -->
+                    <span v-else-if="dateForm ==='mouth'" class="date-text" v-for="item in filterDateRange"
+                        :style="{ 'flex-basis': modifiedWidth * 30 + 'px' }">{{item.month}}月
+                    </span>
+                </div>
+                <!-- 任務時間長條圖 -->
+                <div style="display: grid; grid-auto-rows: 45px;"
+                    :style="{'grid-template-columns': `repeat(${unit}, ${modifiedWidth}px)` }">
+                    <div class="line-container" style="margin: 5px 0;"
+                        :style="{'grid-area': `${item.grid[0]}/${item.grid[1]}/${item.grid[2]}/${item.grid[3]}` }"
+                        v-for="(item, key) in filteredTodos">
+                        <div class="fill-color" :class="{ 'fill-dark-color': item.complete }">
+                            <p>{{item.title}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- slider bar -->
+            <div class="slider-block" ref="slider">
+                <el-slider v-model="width" />
+            </div>
+        </div>
+
+        <!-- 對話框 -->
+        <dialog ref="modal" class="modal-container">
+            <div class="content">
+                <slot name="header">清除全部任務?</slot>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <slot>
+                    <button class="main-color-btn" @click="clearAllTasks" style="margin-left: auto;">確定</button>
+                    <button class="defalt-color-btn" @click="closeDialog">取消</button>
+                </slot>
+            </div>
+        </dialog>
+        <!-- <p>最小時間 {{minDate}}</p>
+        <p>最大時間 {{maxDate}}</p> -->
+    </div>
+
+
+
+    <script src="./index.js"></script>
+
+
+</body>
+
+</html>

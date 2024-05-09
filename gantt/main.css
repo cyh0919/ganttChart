@@ -1,0 +1,303 @@
+:root {
+    --background-main: #34343E;
+    --background-sub: #292929;
+    --text-main: #FFFFFF;
+    --text-sub: #ffffff81;
+    --borad-main: #B096FD;
+    --borad-dark: #6431ff;
+    --borad-sub: #FFFFFF;
+    --white30: #ffffff1a;
+}
+
+/* css */
+
+::-webkit-scrollbar {
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--background-sub);
+    border-radius: 10px;
+    margin: 20px 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--text-sub);
+}
+
+body {
+    background: var(--background-main);
+    color: var(--text-main);
+    font-family: "Noto Sans TC", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#to-do-list {
+    padding: 15px;
+}
+
+.title {
+    margin-bottom: 15px;
+    font-family: "Noto Sans TC", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: 2PX;
+}
+
+.borad {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    height: auto;
+    min-height: 450px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.round-bg {
+    border-radius: 5px;
+    background: var(--background-sub);
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.mission {
+    min-width: 500px;
+}
+
+.gant {
+    flex: 1;
+    overflow-x: scroll;
+}
+
+/* 新增事項 */
+.addTodo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 0 0 15px;
+    gap: 15px;
+}
+
+.input-text {
+    background-color: var(--background-main);
+    color: var(--text-main);
+    flex-grow: auto;
+    flex: 1;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+}
+
+.add-btn {
+    width: 75px;
+    border: 0;
+    background: var(--borad-main);
+    color: var(--text-main);
+    height: 45px;
+    border-radius: 5px;
+}
+
+.add-btn:hover {
+    background: var(--borad-dark);
+}
+
+
+
+/* 時間起迄點 */
+.timePicker {
+    height: 32px !important;
+}
+
+.el-date-editor.el-input__wrapper {
+    background-color: var(--background-main);
+    border: none;
+    box-shadow: 0 0 0 1px #ffffff00 inset !important;
+}
+
+
+
+/* 事項貯列 */
+.todoList-list {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+    border-radius: 5px;
+    align-content: flex-start
+}
+
+.line-container {
+    display: flex;
+    gap: 10px;
+    box-sizing: border-box;
+    height: 45px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.todoRow {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.todoList-list:hover {
+    /* background: var(--background-main); */
+}
+
+.todoList-title {
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.complete {
+    text-decoration: line-through;
+    color: var(--text-sub);
+}
+
+.complete_icon {
+    color: var(--text-sub);
+}
+
+.input-edit-text {
+    background-color: #29292900;
+    color: var(--text-main);
+    flex-grow: auto;
+    flex: 1;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.defalt-color-btn {
+    border: 0;
+    background: var(--text-sub);
+    color: var(--text-main);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.main-color-btn {
+    border: 0;
+    background: var(--borad-main);
+    color: var(--text-main);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+
+/* 篩選器 */
+.filter-container {
+    display: flex;
+    gap: 10px;
+    box-sizing: border-box;
+    margin-top: auto;
+    align-items: center
+}
+
+.note-text {
+    color: var(--text-sub);
+    font-size: 14px;
+}
+
+.clear-all {
+    color: var(--text-sub);
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.clear-all:hover {
+    color: var(--borad-main);
+}
+
+/* modal */
+.modal-container {
+    min-width: 230px;
+    padding: 24px;
+    background: var(--background-sub);
+    color: var(--text-main);
+    border-radius: 5px;
+    border: 0px #000000 solid;
+    box-shadow: rgba(0, 0, 0, .5) 0px 7px 15px 0px;
+}
+
+.content {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* 日期 */
+.date-container {
+    height: 45px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.fill-color {
+    height: 24px;
+    min-width: 24px;
+    width: 100%;
+    background: var(--borad-main);
+    border-radius: 24px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.fill-dark-color{
+    background: var(--white30);
+
+}
+
+.fill-color:hover {
+    overflow: visible;
+}
+
+.fill-color p {
+    color: var(--text-sub);
+}
+
+.date-text {
+    text-wrap: nowrap;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 
+.date-text::before {
+    position: absolute;
+    content: '';
+    top: 0px;
+    right: -30px;
+    height: 100%;
+    width: 1px;
+    background-color: var(--white30);
+} */
+
+/* slider bar */
+.slider-block {
+    width: 200px;
+    position: absolute;
+}
+
+.el-slider {
+    --el-slider-main-bg-color: var(--borad-main) !important;
+}
