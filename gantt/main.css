@@ -1,6 +1,8 @@
 :root {
     --background-main: #34343E;
     --background-sub: #292929;
+    --background-main-light: #34343e59;
+
     --text-main: #FFFFFF;
     --text-sub: #ffffff81;
     --borad-main: #B096FD;
@@ -261,7 +263,7 @@ body {
     overflow: hidden;
 }
 
-.fill-dark-color{
+.fill-dark-color {
     background: var(--white30);
 
 }
@@ -300,4 +302,14 @@ body {
 
 .el-slider {
     --el-slider-main-bg-color: var(--borad-main) !important;
+}
+
+.light-row {
+    background-color: #00000000;
+    border-radius: 5px;
+}
+
+.dark-row {
+    background-color: var(--background-main-light);
+    border-radius: 5px;
 }
