@@ -15,6 +15,7 @@
 
 ::-webkit-scrollbar {
     height: 4px;
+    width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -212,14 +213,17 @@ body {
 }
 
 .note-text {
+    display: block;
+    width: 150px;
     color: var(--text-sub);
     font-size: 14px;
+    margin-right: auto;
 }
 
 .clear-all {
+    display: inline;
     color: var(--text-sub);
     font-size: 14px;
-    margin-left: auto;
 }
 
 .clear-all:hover {
@@ -312,4 +316,42 @@ body {
 .dark-row {
     background-color: var(--background-main-light);
     border-radius: 5px;
+}
+
+.filter-container-right{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width:768px) {
+    .borad{
+        flex-direction: column;
+
+    }
+    .mission {
+        width: 100%;
+        min-width: unset;
+        min-height: 500px;
+    }
+
+    .gant{
+        min-height: 500px;
+    }
+
+    .grid-item{
+        min-height: 500px;
+    }
+}
+
+@media (max-width:480px) {
+    .timePicker .el-range-editor.el-input__wrapper {
+        width: 100%;
+    }
+
+    .filter-container-right{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
 }

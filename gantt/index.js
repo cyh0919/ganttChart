@@ -13,14 +13,6 @@ const app = Vue.createApp({
             editEndTimestamp: 0,
             //最大最小時間戳避免效能問題
             todoList: [
-                {
-                    title: '代辦事項1',
-                    complete: true,
-                    startTimestamp: 1715040000,
-                    endTimestamp: 1715040000,
-                    grid: [1, 1, 2, 2],
-                    formattedDate: '5/7 - 5/7'
-                }
             ],
             editingKey: null, // 正在編輯的項目索引
             editedTitle: '', // 編輯中的標題

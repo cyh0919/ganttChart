@@ -83,8 +83,11 @@
                         @click="filter='ing'">進行中</span>
                     <span class="defalt-color-btn" :class="{'main-color-btn': filter === 'completed'}"
                         @click="filter='completed'">已完成</span>
-                    <span class="note-text">還有 {{countIngMission.length}} 筆任務未完成</span>
-                    <span class="clear-all" @click="showDialog">清除全部任務</span>
+                        <div class="filter-container-right">
+
+                            <span class="note-text">還有 {{countIngMission.length}} 筆任務未完成</span>
+                            <span class="clear-all" @click="showDialog">清除全部任務</span>
+                        </div>
                 </div>
             </div>
             <!-- 甘特圖 -->
